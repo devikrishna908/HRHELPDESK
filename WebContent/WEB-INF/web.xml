@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>HRHelpDesk</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>HRLogin</servlet-name>
+		<servlet-class>com.helpdesk.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HRLogin</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CatFetch</servlet-name>
+		<servlet-class>com.helpdesk.FetchCategoryServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CatFetch</servlet-name>
+		<url-pattern>/fetchCategory</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SubmitTicket</servlet-name>
+		<servlet-class>com.helpdesk.SubmitTicketServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubmitTicket</servlet-name>
+		<url-pattern>/submitTicket</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>employeeTicket</servlet-name>
+		<servlet-class>com.helpdesk.EmpFetchTicketsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>employeeTicket</servlet-name>
+		<url-pattern>/employeeTicket</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>newTicketHead</servlet-name>
+		<servlet-class>com.helpdesk.HeadNewTicketServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>newTicketHead</servlet-name>
+		<url-pattern>/hrNewTicket</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>allTicketHead</servlet-name>
+		<servlet-class>com.helpdesk.HeadAllTicketsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>allTicketHead</servlet-name>
+		<url-pattern>/hrAllTicket</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>allotment</servlet-name>
+		<servlet-class>com.helpdesk.AllotmentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>allotment</servlet-name>
+		<url-pattern>/ticketAllotment</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>allotmentHRHead</servlet-name>
+		<servlet-class>com.helpdesk.HeadAllotmentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>allotmentHRHead</servlet-name>
+		<url-pattern>/allotTicket</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>Users</servlet-name>
+		<servlet-class>com.helpdesk.HeadUsers</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Users</servlet-name>
+		<url-pattern>/hrUsers</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add New Category</title>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.container {
+	width: 50%;
+	margin: 50px auto;
+	text-align: center;
+	background-color: #f0f0f0;
+	/* Background color for the container */
+	border: 2px solid #ccc; /* Border around the container */
+	border-radius: 10px; /* Rounded corners for the container */
+	padding: 20px;
+	background-color: #f0f0f0; /* Padding inside the container */
+}
+
+h2 {
+	margin-top: 40px;
+	text-align: center;
+	margin-bottom: 40px; /* Space below the header */
+}
+
+input[type="text"] {
+	width: calc(100% - 70px);
+	padding: 10px;
+	font-family: serif;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.button-container {
+	text-align: center; /* Align buttons to the center */
+	margin-top: 40px; /* Space between input and button container */
+}
+
+button {
+	padding: 10px 20px;
+	font-size: 12px;
+	font-family: serif;
+	cursor: pointer;
+	border-radius: 5px;
+	margin: 0 5px;
+	border: none; /* Space between buttons */
+}
+
+button.insert {
+	background-color: #4CAF50;
+	color: white;
+}
+
+button.cancel {
+	background-color: #f44336;
+	color: white;
+}
+</style>
+<script>
+	function submitForm() {
+	    document.getElementById("addCategory").action = "newCategory";
+	}
+	function cancelAction() {
+		alert("Cancel button clicked. Redirecting to homepage...");
+		window.history.back();
+		return false;
+	}
+</script>
+</head>
+<body>
+	<div class="container">
+		<h2>ADD NEW CATEGORY</h2>
+		<form id="addCategory" action="newCategory" method="get">
+			<input type="text" id="categoryName" name="categoryName" placeholder="Enter category name">
+			<div class="button-container">
+				<button type="submit" class="insert" onclick="submitForm()">INSERT</button>
+				<button type="button" class="cancel" onclick="cancelAction()">CANCEL</button>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

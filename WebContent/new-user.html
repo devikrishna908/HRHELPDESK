@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Registration Page</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!-- Include Font Awesome for icons -->
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7; /* Background color of the body */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.form-container {
+    background-color: #ffffff; /* Background color of the form container */
+    border: 2px solid #ccc; /* Border around the form container */
+    border-radius: 10px; /* Rounded corners for the form container */
+    padding: 20px; /* Padding inside the form container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for the form container */
+    width: 50%; /* Adjust the width of the form container */
+}
+
+.logo {
+    width: 100px; /* Adjust the width of the logo */
+    height: auto;
+    margin-bottom: 20px; /* Space below the logo */
+}
+
+h2 {
+    color: #1a2e35;
+    font-size: 28px;
+    font-family:serif;
+    font-weight:bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0; /* Space below the heading */
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000000;
+    font-size: 14px;
+}
+
+.input-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-icon i {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #3d3d3d;
+}
+.input-icon input[type="text"],
+.input-icon input[type="password"]{
+    width: calc(100% - 40px); /* Adjust the width of the input */
+
+}
+
+select{
+    width: 100%; /* Adjust the width of the input */
+}
+
+.input-icon input[type="text"],
+.input-icon input[type="password"],
+select {
+    outline: none;
+    border: 1px solid #ccc; /* Border around the input */
+    border-radius: 5px; /* Rounded corners for the input */
+    padding: 8px;
+    margin-bottom: 3px;
+    padding-left: 30px;
+    font-size: 12pt;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.input-icon select {
+    appearance: none; /* Remove default appearance of select */
+    background: transparent; /* Transparent background */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 640L160 288h704z"></path></svg>'); /* Custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    padding-right: 30px; /* Space for the arrow icon */
+}
+
+.input-button {
+    text-align: center;
+    margin-top: 20px; /* Space above the buttons */
+}
+
+.input-button input[type="submit"],
+.input-button input[type="button"] {
+    height: 40px;
+    padding: 8px 20px;
+    font-size: 12pt;
+    border: none;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.input-button input[type="submit"].insert {
+    background-color: #4CAF50; /* Green background for the "CREATE" button */
+    color: white;
+}
+
+.input-button input[type="button"].cancel {
+    background-color: #f44336; /* Red background for the "CANCEL" button */
+    color: white;
+}
+
+</style>
+<script>
+	function cancelAction() { 
+		alert('Cancel button clicked. Redirecting to homepage...');
+		window.history.back(); 
+	}
+</script>
+</head>
+<body>
+<h2>CREATE A NEW USER</h2>
+<div class="container">
+    <div class="form-container">
+        <img src="reg.jpg" alt="Logo" class="logo">
+        <form name="create" method="get" action="createUser">
+            <div class="input-icon">
+                <i class="fas fa-user"></i> <input type="text" name="name" placeholder="Enter the Name of the User">
+            </div>
+
+            <div class="input-icon">
+                <i class="fas fa-envelope"></i> <input type="text" name="email" placeholder="Enter Email ID">
+            </div>
+
+            <div class="input-icon">
+                <i class="fas fa-phone"></i> <input type="text" name="contact" placeholder="Enter Contact Number">
+            </div>
+
+            <div class="input-icon">
+                <i class="fas fa-user"></i> <input type="text" name="uname" placeholder="Enter Username">
+            </div>
+
+            <div class="input-icon">
+                <i class="fas fa-lock"></i> <input type="password" name="password" placeholder="Enter Password">
+            </div>
+
+            <div class="input-icon">
+                <i class="fas fa-lock"></i> <input type="password" name="cpassword" placeholder="Confirm Password">
+            </div>
+
+            <div class="input-icon">
+                <i class="fas fa-user-cog"></i>
+                <select id="role" name="role" required>
+                    <option value="select">Select User Role</option>
+                    <option value="HR Head">HR Head</option>
+                    <option value="HR">HR</option>
+                    <option value="Employee">Employee</option>
+                </select><br>
+            </div>
+            <br>
+            <div class="input-button">
+                <input type="submit" value="CREATE" class="insert">
+                <input type="button" value="CANCEL" class="cancel" onclick="cancelAction()"> <br>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

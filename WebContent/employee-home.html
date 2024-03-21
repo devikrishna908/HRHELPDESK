@@ -1,0 +1,358 @@
+<html>
+<head>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 5px;
+}
+
+h2 {
+	font-size: 32px;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	text-align: center;
+	color: #1a2e35;
+}
+.content {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Align children horizontally */
+    justify-content: center; /* Align children vertically */
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center; /* Align text horizontally */
+}
+
+.name {
+	font-size: 25px;
+	font-family: cursive;
+	color: #ffffff;
+}
+
+.labeldate {
+	padding-right: 40px;
+	font-family: serif;
+	font-size: 13pt; 
+	margin-right:50px;
+	display: inline-block;
+	width: 100%;
+	text-align: right;
+}
+
+.tkt {
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 12pt;
+	font-weight: bold;
+	margin-top: 30px;
+	margin-bottom: 40px;
+}
+
+nav {
+	background-color: #79a8c2;
+	padding: 10px;
+	display: flex;
+	height: 30;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#profile-icon {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #fff;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+#profile-icon img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+#profile-menu {
+	display: none;
+	position: absolute;
+	top: 60px;
+	right: 13px;
+	background-color: #ffffff;
+	box-shadow: 0 0 10px rgba(151, 151, 151, 0.1);
+	border-radius: 2px;
+	z-index: 1000;
+}
+
+#profile-menu a {
+	display: block;
+	padding: 15px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 12pt;
+	font-family: 'Times New Roman', Times, serif;
+	color: #000000;
+}
+
+#profile-menu a:hover {
+	background-color: #d8e6f3;
+}
+
+#profile-menu a {
+	text-decoration: none;
+}
+
+.tabs {
+	display: flex;
+	border-bottom: 1px solid #ccd0d1;
+	width: 100%
+}
+
+.tab {
+	cursor: pointer;
+	flex-grow: auto;
+	padding-right: 80px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 30px;
+	font-size: 13pt;
+	font-family: serif;
+	text-align: center;
+	margin: 0px;
+}
+
+input[type="text"] {
+	width: 100px; /* Adjust the width as needed */
+	box-sizing: border-box;
+	border: none;
+	font-size:13pt;
+	background-color: white;
+	margin-bottom: 10px;
+	padding: 8px;
+}
+
+input[type="submit"] {
+	padding: 4px; /* Adjust padding to increase or decrease button size */
+	font-size: 12pt;
+	border: none;
+	margin-top: 30px; border-radius : 4px;
+	background-color: rgb(60, 152, 206);
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	width: 100px;
+	height: 30px;
+	border-radius: 4px;
+}
+
+input[type="button"] {
+	padding: 4px; /* Adjust padding to increase or decrease button size */
+	font-size: 12pt;
+	border: none;
+	margin-top: 30px;
+	border-radius: 4px;
+	background-color: rgb(60, 152, 206);
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	width: 100px;
+	height: 30px;
+}
+
+.tab:hover {
+	font-weight: bold;
+	text-decoration: underline;
+	color: #1a2e35;
+}
+textarea {
+	font-family: serif;
+	font-size: 12pt;
+}
+
+.tab.active {
+	font-weight: bold;
+	text-decoration: underline;
+	color: #1a2e35;
+}
+
+select {
+	font-size: 12pt;
+	width: 20%;
+	outline: none;
+	border-radius: 2px;
+	height: 30px;
+	font-family: 'Times New Roman', Times, serif
+}
+
+label {
+	font-size: 12pt;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.create-link {
+	font-size: 12pt;
+	text-align: right;
+	display: block;
+	color: #101cc5;
+	font-family: 'Times New Roman', Times, serif;
+	padding-right: 5%;
+}
+
+.create-link:hover {
+	color: #b10000;
+}
+
+.content {
+	display: none;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.content.active {
+	display: block;
+}
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const tabs = document.querySelectorAll('.tab');
+      const contents = document.querySelectorAll('.content');
+      const profileIcon = document.getElementById('profile-icon');
+      const profileMenu = document.getElementById('profile-menu');
+      const logout = document.getElementById('logout');
+            
+      // Set the first tab as active initially
+      tabs[0].classList.add('active');
+      contents[0].classList.add('active');
+
+      // Focus the first tab on page load
+      tabs[0].focus();
+      loadData();
+      setSystemDate();
+      
+      function setSystemDate() {
+    	  
+    	    var currentDate = new Date();
+    	    var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    	    var formattedDate = currentDate.toLocaleDateString('en-GB', options); // Specify the locale and options
+    	    document.getElementById("systemDate").innerText = formattedDate;
+   	 }
+      
+      function loadData() {
+          // Create a new XMLHttpRequest object
+          var xhr = new XMLHttpRequest();
+          // Configure the request
+          xhr.open('GET', 'fetchCategory', true);
+          // Setup a function to handle the response
+          xhr.onload = function() {
+              if (xhr.status === 200) {
+                  // Get the select element
+                  var select = document.getElementById('category');
+                  // Populate the select element with the fetched options
+                  select.innerHTML = xhr.responseText;
+              } else {
+                  console.error('Request failed. Status: ' + xhr.status);
+              }
+          };
+
+          // Send the request
+          xhr.send();
+      }
+		
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', function() {
+          // Hide all contents
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(content => content.classList.remove('active'));
+
+          // Show the clicked content
+          tab.classList.add('active');
+          contents[index].classList.add('active');
+          //loadData(); 
+          if(index==1) {
+        	  loadMyTickets();
+          }
+        });
+      });
+      
+      function loadMyTickets() {
+
+    	  var xhr = new XMLHttpRequest();
+          // Configure the request
+          xhr.open('GET', 'loadMyTicketsServlet', true);
+          // Setup a function to handle the response
+          xhr.onload = function() {
+              if (xhr.status === 200) {
+                  // Handle the response here
+                  var response = xhr.responseText;
+                  // Assuming you have a div with id 'all-tickets' to display the tickets
+                  document.getElementById('all-tickets').innerHTML = response;
+              } else {
+                  console.error('Request failed. Status: ' + xhr.status);
+              }
+          };
+          // Send the request
+          xhr.send();
+      }
+
+
+    // Toggle profile menu visibility on click
+    profileIcon.addEventListener('click', function() {
+        profileMenu.style.display = (profileMenu.style.display === 'block') ? 'none' : 'block';
+    });
+
+    // Hide profile menu if clicked outside
+    document.addEventListener('click', function(event) {
+        if (!profileIcon.contains(event.target) && !profileMenu.contains(event.target)) {
+          profileMenu.style.display = 'none';
+        }
+    });
+    
+    // Handle logout link click
+    logout.addEventListener('click', function() {
+        const confirmLogout = confirm('Are you sure you want to log out?');
+        if (confirmLogout) {
+          // Implement logout functionality here
+        	window.location.href = "index.html"
+        }
+        });
+
+    }); 
+
+</script>
+</head>
+
+
+<body>
+	<nav>
+		<div id="logo">
+			<label class="name">HR HELP DESK</label>
+		</div>
+		<div id="profile-icon">
+			<img src="user.png" alt="Profile Image">
+		</div>
+		<div id="profile-menu">
+			<a href="#" id="logout">Logout</a>
+		</div>
+	</nav>
+
+
+	<div class="tabs">
+		<div class="tab">Raise Ticket</div>
+		<div class="tab">All Tickets</div>
+	</div>
+
+	<div class="content">
+		<label for='date' class='labeldate' id='systemDate'>Date</label>
+		<h2>RAISE TICKET</h2><br><br>
+		<form name='raise' action='submitTicket' method='get'>
+			<label class='tkt'>Choose Ticket Category</label><br><br> 
+			<select id='category' name='category'>
+			</select><br><br>
+			<br> <label class='tkt'>Ticket Description</label><br><br>
+			<textarea id="message" name="message" rows="6" cols="100"></textarea>
+			<br>
+			<br> <input type="submit" value="SUBMIT" /> 
+		</form>
+	</div>
+
+	<div class="content" id="all-tickets">
+		<h2>ALL TICKETS</h2>
+	</div>
+
+</body>
+</html>

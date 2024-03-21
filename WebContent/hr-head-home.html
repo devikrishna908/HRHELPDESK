@@ -1,0 +1,316 @@
+<html>
+<head>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 5px;
+}
+
+h2 {
+	font-size: 32px;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	text-align: center;
+	color: #1a2e35;
+}
+
+.name {
+	font-size: 25px;
+	font-family: cursive;
+	color: #ffffff;
+}
+
+nav {
+	background-color:#79a8c2;
+	padding: 10px;
+	display: flex;
+	height: 30;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#profile-icon {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #fff;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+#profile-icon img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+#profile-menu {
+	display: none;
+	position: absolute;
+	top: 60px;
+	right: 13px;
+	background-color: #ffffff;
+	box-shadow: 0 0 10px rgba(151, 151, 151, 0.1);
+	border-radius: 2px;
+	z-index: 1000;
+}
+
+#profile-menu a {
+	display: block;
+	padding: 15px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 14pt;
+	font-family: 'Times New Roman', Times, serif;
+	color: #000000;
+}
+
+#profile-menu a:hover {
+	background-color: #d8e6f3;
+}
+
+#profile-menu a {
+	text-decoration: none;
+}
+
+.tabs {
+	display: flex;
+	border-bottom: 1px solid #ccd0d1;
+	width: 100%
+}
+
+.tab {
+	cursor: pointer;
+	flex-grow: auto;
+	padding-right: 80px;
+	padding-top:10px;
+	padding-bottom: 10px;
+	padding-left:30px;
+	font-size: 14pt;
+	font-family: serif;
+	text-align: center;
+	margin: 0px;
+}
+
+input[type="text"] {
+	width: 100px; /* Adjust the width as needed */
+	box-sizing: border-box;
+	border: none;
+	font-size:14pt;
+	background-color: white;
+	margin-bottom: 10px;
+	padding: 8px;
+}
+
+input[type="button"] {
+	padding: 4px; /* Adjust padding to increase or decrease button size */
+	font-size: 12pt;
+	border: none;
+	border-radius: 4px;
+	background-color: rgb(60, 152, 206);
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	width: 80px;
+	height: 30px;
+}
+
+.tab:hover {
+	font-weight: bold;
+	text-decoration:underline; 
+	color: #1a2e35;
+}
+
+.tab.active {
+	font-weight: bold;
+	text-decoration:underline; 
+	color: #1a2e35;	
+}
+
+select {
+	font-size: 12pt;
+	width: 15%;
+	outline: none;
+	border-radius: 2px;
+	height: 30px;
+	font-family: 'Times New Roman', Times, serif
+}
+
+label {
+	font-size: 14pt;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.create-link {
+	font-size: 13pt;
+	text-align: right;
+	display: block;
+	color: #101cc5;
+	font-family: 'Times New Roman', Times, serif;
+	padding-right: 5%;
+}
+
+.create-link:hover {
+	color: #b10000;
+}
+
+.content {
+	display: none;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.content.active {
+	display: block;
+}
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const tabs = document.querySelectorAll('.tab');
+      const contents = document.querySelectorAll('.content');
+      const profileIcon = document.getElementById('profile-icon');
+      const profileMenu = document.getElementById('profile-menu');
+      const logout = document.getElementById('logout');
+      
+      const ticketDelete = document.getElementById("delete-ticket");
+      const ticketEdit = document.getElementById("edit-ticket");
+      
+      // Set the first tab as active initially
+      tabs[0].classList.add('active');
+      contents[0].classList.add('active');
+      loadContent(0);
+
+      tabs.forEach((tab, index) => {
+    	    tab.addEventListener('click', function() {
+    	        // Hide all contents
+    	        tabs.forEach(t => t.classList.remove('active'));
+    	        contents.forEach(content => content.classList.remove('active'));
+
+    	        // Show the clicked content
+    	        tab.classList.add('active');
+    	        contents[index].classList.add('active');
+
+    	        // Load content based on tab index
+    	        loadContent(index);
+    	    });
+    	});
+
+    	function loadContent(index) {
+    	    var xhr = new XMLHttpRequest();
+    	    xhr.onreadystatechange = function() {
+    	        if (xhr.readyState === XMLHttpRequest.DONE) {
+    	            if (xhr.status === 200) {
+    	                // Insert the servlet response into the corresponding div
+    	                document.getElementById("content" + index).innerHTML = xhr.responseText;
+    	            } else {
+    	                console.error('Request failed. Status: ' + xhr.status);
+    	            }
+    	        }
+    	    };
+    	    // Define the URLs for each tab content
+    	    var urls = ['hrNewTicket', 'hrAllTicket', 'hrUsers','hrTicketCategory', 'hrReports']; // Adjust these URLs based on your application
+    	    
+    	    xhr.open('GET', urls[index], true);
+    	    xhr.send();
+    	}
+    	
+        // Toggle profile menu visibility on click
+        profileIcon.addEventListener('click', function() {
+            profileMenu.style.display = (profileMenu.style.display === 'block') ? 'none' : 'block';
+        });
+
+    	    
+	    // Hide profile menu if clicked outside
+		    document.addEventListener('click', function(event) {
+		        if (!profileIcon.contains(event.target) && !profileMenu.contains(event.target)) {
+	    	      profileMenu.style.display = 'none';
+	        	}
+	    	});
+
+    	    // Handle logout link click
+    	    logout.addEventListener('click', function() {
+    	        const confirmLogout = confirm('Are you sure you want to log out?');
+    	        if (confirmLogout) {
+    	          // Implement logout functionality here
+    	        	window.location.href = "index.html"
+    	        }
+    	    }); 
+
+    	// Call the loadContent function for the first tab when the page is loaded
+    	document.addEventListener('DOMContentLoaded', function() {
+    	    loadContent(0);
+    	});
+
+/*     function redirectToNewPage(pageref){
+        window.location.href = pageref;
+    } */
+    });
+    
+
+	function confirmDelete(userId) {
+    var confirmed = confirm("Are you sure you want to delete the user?");
+		if (confirmed) {
+    		window.location.href = "deleteUser?pid="+ userId;
+    	}
+	}
+
+	function confirmDeleteCategory(catId) {
+	    var confirmed = confirm("Are you sure you want to delete the category?");
+			if (confirmed) {
+	    		window.location.href = "deleteCategory?cid="+ catId;
+	    	}
+		}
+
+</script>
+</head>
+
+<body>
+
+	<nav>
+		<div id="logo">
+			<label	class="name">HR HELP DESK</label>
+		</div>
+		<div id="profile-icon">
+			<img src="user.png" alt="Profile Image">
+		</div>
+		<div id="profile-menu">
+				<a href="#" id="logout">Logout</a>
+		</div>
+	</nav>
+
+	<div class="tabs" id ='content'>
+		<div class="tab">New Tickets</div>
+		<div class="tab">All Tickets</div>
+		<div class="tab">Users</div>
+		<div class="tab">Ticket Category</div>
+		<div class="tab">Reports</div>
+	</div>
+
+	<div class="content" id ='content0'>
+		<h2>NEW TICKETS</h2>
+		<br>
+	</div>
+
+
+	<div class="content" id ='content1'>
+		<h2>ALL TICKETS RAISED</h2>
+		<br>
+	</div>
+
+	<div class="content" id ='content2'>
+		<a href="new-user.html" class="create-link">CREATE NEW USER</a><br>
+		<h2>USER DETAILS</h2>
+	</div>
+
+	<div class="content" id ='content3'>
+		<a href="new-category.html" class="create-link">CREATE NEW
+			CATEGORY</a><br>
+		<h2>TICKET CATEGORIES</h2>
+	</div>
+
+	<div class="content" id ='content4'>
+		<h2>REPORT</h2>
+		<br>
+		<div></div>
+
+	</div>
+</body>
+</html>
