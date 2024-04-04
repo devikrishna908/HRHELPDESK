@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/createUser")
@@ -43,7 +44,9 @@ public class CreateUserServlet extends HttpServlet {
 			ps.setString(2,contact);
 			ps.setString(3,email);
 			int no = ps.executeUpdate();
-			
+			HttpSession session = request.getSession();
+			String per_name = (String) session.getAttribute("per_name");
+
 			if(no>0){
 				rs =ps.getGeneratedKeys();
 				if(rs.next()){
@@ -59,7 +62,7 @@ public class CreateUserServlet extends HttpServlet {
 						pw.println("<br>User Added Successfully...!");
 						pw.println("<script>");
 		                pw.println("setTimeout(function(){ "
-		                		+ "window.history.back();"
+		                		 + "window.location.href = 'hr-home.html?per_name=" + per_name + "';"
 		                		+ " }, 1500);");
 		                pw.println("</script>");
 					}
@@ -69,7 +72,7 @@ public class CreateUserServlet extends HttpServlet {
 						pw.println("<br>Failed To Add User, Something went wrong...!");
 						pw.println("<script>");
 		                pw.println("setTimeout(function(){ "
-		                		+ "window.history.back();"
+		                		 + "window.location.href = 'hr-home.html?per_name=" + per_name + "';"
 		                		+ " }, 1500);");
 		                pw.println("</script>");
 					}
@@ -79,7 +82,7 @@ public class CreateUserServlet extends HttpServlet {
 				pw.println("<br>Failed To Add User, Something went wrong...!");
 				pw.println("<script>");
                 pw.println("setTimeout(function(){ "
-                		+ "window.history.back();"
+               		 + "window.location.href = 'hr-home.html?per_name=" + per_name + "';"
                 		+ " }, 1500);");
                 pw.println("</script>");				
 			}

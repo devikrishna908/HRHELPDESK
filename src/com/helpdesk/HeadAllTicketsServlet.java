@@ -72,7 +72,7 @@ public class HeadAllTicketsServlet extends HttpServlet{
 				pw.println("<td>" + rs.getString(4) + "</td>");
 				pw.println("<td>" + rs.getString(5) + "</td>");
 				pw.println("<td><a href = 'viewStatus?id=" + rs.getInt(1) +"'>VIEW STATUS</a></td>");
-				pw.println("<td><a href = 'deleteTicket?id=" + rs.getInt(1) +"'>DELETE</a></td>");
+				pw.println("<td><a id='deleteTicket' onclick='confirmDeleteTicket("+rs.getInt(1)+")'>DELETE</a></td>");
 				pw.println("</tr>");
 			}
 

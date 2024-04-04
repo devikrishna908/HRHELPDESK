@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/saveTicketStatus")
 public class SaveTicketStatusServlet extends HttpServlet {
@@ -57,11 +58,14 @@ public class SaveTicketStatusServlet extends HttpServlet {
 				ps.setDate(4, cdate);
 				int no = ps.executeUpdate();
 				
+				HttpSession session = request.getSession();
+				String per_name = (String) session.getAttribute("per_name");
+
 				if(no>0){
 					pw.println("<br>Ticket Status Updated");
 					pw.println("<script>");
 	                pw.println("setTimeout(function(){ "
-	                		+ "window.location.href = \"hr-home.html\";"
+	                		 + "window.location.href = 'hr-home.html?per_name=" + per_name + "';"
 	                		+ " }, 1000);");
 	                pw.println("</script>");
 				}
@@ -69,7 +73,7 @@ public class SaveTicketStatusServlet extends HttpServlet {
 					pw.println("<br>Failed to update, Something went wrong...!");
 					pw.println("<script>");
 	                pw.println("setTimeout(function(){ "
-	                		+ "window.location.href = \"hr-home.html\";"
+	                		 + "window.location.href = 'hr-home.html?per_name=" + per_name + "';"
 	                		+ " }, 1000);");
 	                pw.println("</script>");
 				}

@@ -51,7 +51,7 @@ public class HeadAllotmentServlet extends HttpServlet {
 				pw.println("<br>Ticket Allotted Successfully");
 				pw.println("<script>");
                 pw.println("setTimeout(function(){ "
-                		+ "window.history.back();"
+                		+ "window.location.href = 'hr-head-home.html';"
                 		+ " }, 1500);");
                 pw.println("</script>");
 			}
@@ -59,7 +59,7 @@ public class HeadAllotmentServlet extends HttpServlet {
 				pw.println("<br>Failed to allot the ticket, Something went wrong...!");
 				pw.println("<script>");
                 pw.println("setTimeout(function(){ "
-                		+ "window.history.back();"
+                		+ "window.location.href = 'hr-head-home.html';;"
                 		+ " }, 1500);");
                 pw.println("</script>");
 			}

@@ -20,7 +20,7 @@ h2 {
 }
 
 nav {
-	background-color:#79a8c2;
+	background-color: #79a8c2;
 	padding: 10px;
 	display: flex;
 	height: 30;
@@ -28,6 +28,10 @@ nav {
 	align-items: center;
 }
 
+#profile-info {
+   display: flex;
+   align-items: center;
+}
 #profile-icon {
 	width: 30px;
 	height: 30px;
@@ -35,6 +39,7 @@ nav {
 	background-color: #fff;
 	overflow: hidden;
 	cursor: pointer;
+	margin-left: 10px;
 }
 
 #profile-icon img {
@@ -82,9 +87,9 @@ nav {
 	cursor: pointer;
 	flex-grow: auto;
 	padding-right: 80px;
-	padding-top:10px;
+	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-left:30px;
+	padding-left: 30px;
 	font-size: 14pt;
 	font-family: serif;
 	text-align: center;
@@ -95,7 +100,7 @@ input[type="text"] {
 	width: 100px; /* Adjust the width as needed */
 	box-sizing: border-box;
 	border: none;
-	font-size:14pt;
+	font-size: 14pt;
 	background-color: white;
 	margin-bottom: 10px;
 	padding: 8px;
@@ -115,14 +120,14 @@ input[type="button"] {
 
 .tab:hover {
 	font-weight: bold;
-	text-decoration:underline; 
+	text-decoration: underline;
 	color: #1a2e35;
 }
 
 .tab.active {
 	font-weight: bold;
-	text-decoration:underline; 
-	color: #1a2e35;	
+	text-decoration: underline;
+	color: #1a2e35;
 }
 
 select {
@@ -161,10 +166,16 @@ label {
 .content.active {
 	display: block;
 }
+
+#username {
+        font-size: 14px;
+        font-family: serif;
+        color: white;
+    }
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const tabs = document.querySelectorAll('.tab');
+	  const tabs = document.querySelectorAll('.tab');
       const contents = document.querySelectorAll('.content');
       const profileIcon = document.getElementById('profile-icon');
       const profileMenu = document.getElementById('profile-menu');
@@ -172,6 +183,12 @@ label {
       
       const ticketDelete = document.getElementById("delete-ticket");
       const ticketEdit = document.getElementById("edit-ticket");
+      
+      var urlParams = new URLSearchParams(window.location.search);
+      var perName = urlParams.get('per_name');
+
+      var usernameSpan = document.getElementById('username');
+      usernameSpan.textContent = perName;
       
       // Set the first tab as active initially
       tabs[0].classList.add('active');
@@ -229,9 +246,17 @@ label {
     	    logout.addEventListener('click', function() {
     	        const confirmLogout = confirm('Are you sure you want to log out?');
     	        if (confirmLogout) {
+    	        	
+    	            // Clear session
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'logoutServlet', true); 
+                    xhr.send();
+
     	          // Implement logout functionality here
-    	        	window.location.href = "index.html"
-    	        }
+	   	        	window.location.href = "index.html";
+    	        	window.history.go(-(window.history.length - 1));
+    	   
+ 				}
     	    }); 
 
     	// Call the loadContent function for the first tab when the page is loaded
@@ -259,24 +284,34 @@ label {
 	    	}
 		}
 
-</script>
+	function confirmDeleteTicket(ticketId) {
+	    var confirmed = confirm("Are you sure you want to delete the user?");
+			if (confirmed) {
+	    		window.location.href = "deleteTicket?id="+ ticketId;
+	    	}
+		}
+
+	</script>
 </head>
 
 <body>
 
 	<nav>
 		<div id="logo">
-			<label	class="name">HR HELP DESK</label>
+			<label class="name">HR HELP DESK</label>
 		</div>
-		<div id="profile-icon">
-			<img src="user.png" alt="Profile Image">
+		<div id="profile-info">
+			<span id="username" class="name"></span>
+			<div id="profile-icon">
+				<img src="user.png" alt="Profile Image">
+			</div>
 		</div>
 		<div id="profile-menu">
-				<a href="#" id="logout">Logout</a>
+			<a href="#" id="logout">Logout</a>
 		</div>
 	</nav>
 
-	<div class="tabs" id ='content'>
+	<div class="tabs" id='content'>
 		<div class="tab">New Tickets</div>
 		<div class="tab">All Tickets</div>
 		<div class="tab">Users</div>
@@ -284,29 +319,29 @@ label {
 		<div class="tab">Reports</div>
 	</div>
 
-	<div class="content" id ='content0'>
+	<div class="content" id='content0'>
 		<h2>NEW TICKETS</h2>
 		<br>
 	</div>
 
 
-	<div class="content" id ='content1'>
+	<div class="content" id='content1'>
 		<h2>ALL TICKETS RAISED</h2>
 		<br>
 	</div>
 
-	<div class="content" id ='content2'>
+	<div class="content" id='content2'>
 		<a href="new-user.html" class="create-link">CREATE NEW USER</a><br>
 		<h2>USER DETAILS</h2>
 	</div>
 
-	<div class="content" id ='content3'>
+	<div class="content" id='content3'>
 		<a href="new-category.html" class="create-link">CREATE NEW
 			CATEGORY</a><br>
 		<h2>TICKET CATEGORIES</h2>
 	</div>
 
-	<div class="content" id ='content4'>
+	<div class="content" id='content4'>
 		<h2>REPORT</h2>
 		<br>
 		<div></div>

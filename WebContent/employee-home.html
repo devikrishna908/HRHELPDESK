@@ -55,6 +55,11 @@ nav {
 	align-items: center;
 }
 
+#profile-info {
+   display: flex;
+   align-items: center;
+}
+
 #profile-icon {
 	width: 30px;
 	height: 30px;
@@ -62,6 +67,7 @@ nav {
 	background-color: #fff;
 	overflow: hidden;
 	cursor: pointer;
+	margin-left: 10px;
 }
 
 #profile-icon img {
@@ -206,6 +212,13 @@ label {
 .content.active {
 	display: block;
 }
+
+#username {
+        font-size: 14px;
+        font-family: serif;
+        color: white;
+    }
+
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -215,6 +228,12 @@ label {
       const profileMenu = document.getElementById('profile-menu');
       const logout = document.getElementById('logout');
             
+      var urlParams = new URLSearchParams(window.location.search);
+      var perName = urlParams.get('per_name');
+
+      var usernameSpan = document.getElementById('username');
+      usernameSpan.textContent = perName;
+
       // Set the first tab as active initially
       tabs[0].classList.add('active');
       contents[0].classList.add('active');
@@ -306,8 +325,15 @@ label {
     logout.addEventListener('click', function() {
         const confirmLogout = confirm('Are you sure you want to log out?');
         if (confirmLogout) {
+        	
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'logoutServlet', true); 
+            xhr.send();
+
           // Implement logout functionality here
-        	window.location.href = "index.html"
+        	window.location.href = "index.html";
+        	window.history.go(-(window.history.length - 1));
+
         }
         });
 
@@ -322,8 +348,11 @@ label {
 		<div id="logo">
 			<label class="name">HR HELP DESK</label>
 		</div>
-		<div id="profile-icon">
-			<img src="user.png" alt="Profile Image">
+		<div id="profile-info">
+			<span id="username" class="name"></span>
+			<div id="profile-icon">
+				<img src="user.png" alt="Profile Image">
+			</div>
 		</div>
 		<div id="profile-menu">
 			<a href="#" id="logout">Logout</a>

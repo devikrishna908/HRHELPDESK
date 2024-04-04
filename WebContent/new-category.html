@@ -48,7 +48,16 @@ input[type="text"] {
 	margin-top: 40px; /* Space between input and button container */
 }
 
-button {
+input[type="submit"] {
+	padding: 10px 20px;
+	font-size: 12px;
+	font-family: serif;
+	cursor: pointer;
+	border-radius: 5px;
+	margin: 0 5px;
+	border: none; /* Space between buttons */
+}
+input[type="button"] {
 	padding: 10px 20px;
 	font-size: 12px;
 	font-family: serif;
@@ -58,22 +67,30 @@ button {
 	border: none; /* Space between buttons */
 }
 
-button.insert {
+.insert {
 	background-color: #4CAF50;
 	color: white;
 }
 
-button.cancel {
+.cancel {
 	background-color: #f44336;
 	color: white;
 }
 </style>
 <script>
 	function submitForm() {
-	    document.getElementById("addCategory").action = "newCategory";
+    	var categoryName = document.getElementById("categoryName").value;
+    	
+   		if (categoryName.trim() === "") {
+        	alert("Category name cannot be empty");
+        	return false; // Prevent form submission
+    	}    
+    	document.getElementById("addCategory").action = "newCategory";
+    	return true;
 	}
+
 	function cancelAction() {
-		alert("Cancel button clicked. Redirecting to homepage...");
+//		alert("Cancel button clicked. Redirecting to homepage...");
 		window.history.back();
 		return false;
 	}
@@ -82,11 +99,11 @@ button.cancel {
 <body>
 	<div class="container">
 		<h2>ADD NEW CATEGORY</h2>
-		<form id="addCategory" action="newCategory" method="get">
+		<form id="addCategory" action="newCategory" method="get" onsubmit="return submitForm()">
 			<input type="text" id="categoryName" name="categoryName" placeholder="Enter category name">
 			<div class="button-container">
-				<button type="submit" class="insert" onclick="submitForm()">INSERT</button>
-				<button type="button" class="cancel" onclick="cancelAction()">CANCEL</button>
+				<input type="submit" class="insert" value="INSERT">
+				<input type="button" class="cancel" value="CANCEL" onclick="cancelAction()"><br>
 			</div>
 		</form>
 	</div>

@@ -136,14 +136,55 @@ select {
 		alert('Cancel button clicked. Redirecting to homepage...');
 		window.history.back(); 
 	}
+    function validateForm() {
+        var name = document.forms["create"]["name"].value;
+        var email = document.forms["create"]["email"].value;
+        var contact = document.forms["create"]["contact"].value;
+        var uname = document.forms["create"]["uname"].value;
+        var password = document.forms["create"]["password"].value;
+        var cpassword = document.forms["create"]["cpassword"].value;
+        var role = document.forms["create"]["role"].value;
+
+        if (name == "" || email == "" || contact == "" || uname == "" || password == "" || cpassword == "" || role == "select") {
+            alert("All fields must be filled out");
+            return false;
+        }
+     
+        var emailPattern = ^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$;
+   //     var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!emailPattern.test(email)) {
+            alert("Invalid email address");
+            return false;
+        }
+        
+        var contactPattern = /^\d{10}$/;
+        if (!contactPattern.test(contact)) {
+            alert("Contact number must contain 10 digits only");
+            return false;
+        }
+        
+        var passwordPattern = /^(?=.*[a-zA-Z0-9]).{6,10}$/;
+        if (!passwordPattern.test(password)) {
+            alert("Password must contain at least 6 characters and may contain letters and numbers");
+            return false;
+        }
+
+
+        if (password != cpassword) {
+            alert("Password and Confirm Password must match");
+            return false;
+        }
+
+        return true;
+    }
 </script>
 </head>
-<body>
+<body >
 <h2>CREATE A NEW USER</h2>
 <div class="container">
     <div class="form-container">
         <img src="reg.jpg" alt="Logo" class="logo">
-        <form name="create" method="get" action="createUser">
+        <form name="create" method="get" action="createUser" onsubmit="return validateForm()">
             <div class="input-icon">
                 <i class="fas fa-user"></i> <input type="text" name="name" placeholder="Enter the Name of the User">
             </div>

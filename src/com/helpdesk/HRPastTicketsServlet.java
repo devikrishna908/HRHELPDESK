@@ -7,12 +7,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/closedTicket")
 public class HRPastTicketsServlet extends HttpServlet{
@@ -33,8 +33,8 @@ public class HRPastTicketsServlet extends HttpServlet{
 			response.setContentType("text/html");
 			PrintWriter pw = response.getWriter();
 
-			ServletContext context = getServletContext();
-			int per_id = (Integer) context.getAttribute("per_id");
+			HttpSession session = request.getSession();
+			Integer per_id = (Integer) session.getAttribute("per_id");
 
 			ps = con.prepareStatement("SELECT t.ticket_id, t.ticket_date, tc.cat_name,"
 					+ " up1.user_per_name AS raised_by, ta.ticket_allocated_date as Allotted_On, t.ticket_desc, ta.ticket_allocation_id "

@@ -9,11 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SubmitTicketServlet extends HttpServlet {
 
@@ -31,8 +31,8 @@ public class SubmitTicketServlet extends HttpServlet {
 		Date date = new Date();
 		java.sql.Date cdate= new java.sql.Date(date.getTime());
 
-		ServletContext context = getServletContext();
-		int per_id = (Integer) context.getAttribute("per_id");
+		HttpSession session = request.getSession();
+		Integer per_id = (Integer) session.getAttribute("per_id");
 		
 		String ticket_description = request.getParameter("message");
 		int ticket_category_id = Integer.parseInt(request.getParameter("category"));
@@ -52,11 +52,13 @@ public class SubmitTicketServlet extends HttpServlet {
 			ps.setString(4, ticket_description);
 			int no = ps.executeUpdate();
 			
+			String per_name = (String) session.getAttribute("per_name");
+
 			if(no>0){
 				pw.println("<br>Ticket Raised Successfully");
 				pw.println("<script>");
                 pw.println("setTimeout(function(){ "
-                		+ "window.history.back();"
+                		+ "window.location.href = 'employee-home.html?per_name=" + per_name + "';"
                 		+ " }, 1500);");
                 pw.println("</script>");
 			}
@@ -64,7 +66,7 @@ public class SubmitTicketServlet extends HttpServlet {
 				pw.println("<br>Failed To Raise, Something went wrong...!");
 				pw.println("<script>");
                 pw.println("setTimeout(function(){ "
-                		+ "window.history.back();"
+                		+ "window.location.href = 'employee-home.html?per_name=" + per_name + "';"
                 		+ " }, 1500);");
                 pw.println("</script>");
 				

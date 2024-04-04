@@ -36,14 +36,14 @@ public class DeleteCategoryServlet extends HttpServlet {
 				pw.println("<br>Category Deleted Successfully...!");
 				pw.println("<script>");
 				pw.println("setTimeout(function(){ " 
-                		+ "window.history.back();"
+                		+ "window.location.href = 'hr-head-home.html';"
 						+ " }, 1000);");
 				pw.println("</script>");
 			} else {
 				pw.println("<br>Deletion Failed...!");
 				pw.println("<script>");
 				pw.println("setTimeout(function(){ " 
-                		+ "window.history.back();"
+                		+ "window.location.href = 'hr-head-home.html';"
 						+ " }, 1000);");
 				pw.println("</script>");
 

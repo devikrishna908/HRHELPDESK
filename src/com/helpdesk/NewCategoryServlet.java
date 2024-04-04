@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/newCategory")
 
@@ -38,11 +39,14 @@ public class NewCategoryServlet extends HttpServlet {
 			ps.setString(1,cname);
 			int no = ps.executeUpdate();
 			
+			HttpSession session = request.getSession();
+			String per_name = (String) session.getAttribute("per_name");
+
 			if(no>0){
 				pw.println("<br>Category added successfully...!");
 				pw.println("<script>");
                 pw.println("setTimeout(function(){ "
-                		+ "window.history.back();"
+                		 + "window.location.href = 'hr-home.html?per_name=" + per_name + "';"
                 		+ " }, 1000);");
                 pw.println("</script>");				
 				
@@ -51,7 +55,7 @@ public class NewCategoryServlet extends HttpServlet {
 				pw.println("<br>Failed To Add Category, Something went wrong...!");
 				pw.println("<script>");
                 pw.println("setTimeout(function(){ "
-                		+ "window.history.back();"
+                		 + "window.location.href = 'hr-home.html?per_name=" + per_name + "';"
                 		+ " }, 1000);");
                 pw.println("</script>");				
 			}

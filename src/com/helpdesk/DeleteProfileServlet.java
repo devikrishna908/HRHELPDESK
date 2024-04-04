@@ -29,25 +29,23 @@ public class DeleteProfileServlet extends HttpServlet {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hrhelpdesk", "root", "mysql");
 
 			int pid = Integer.parseInt(request.getParameter("pid"));
-			ps = con.prepareStatement("DELETE up,ul "
-					+ "FROM users_personal_details up "
-					+ "JOIN user_login_details ul "
-					+ "ON up.user_per_id = ul.user_per_id "
-					+ "WHERE up.user_per_id = ?;");
+			ps = con.prepareStatement("DELETE "
+					+ "FROM users_personal_details "
+					+ "WHERE user_per_id = ?;");
 			ps.setInt(1, pid);
 			int rs = ps.executeUpdate();
 			if (rs > 0) {
 				pw.println("<br>Profile Deleted Successfully...!");
 				pw.println("<script>");
 				pw.println("setTimeout(function(){ " 		                		
-				+ "window.history.back();"
+				+ "window.location.href = 'hr-head-home.html';"
 				+" }, 1000);");
 				pw.println("</script>");
 			} else {
 				pw.println("<br>Deletion Failed...!");
 				pw.println("<script>");
 				pw.println("setTimeout(function(){ " 
-				+ "window.history.back();"
+				+ "window.location.href = 'hr-head-home.html';"
 						+ " }, 1000);");
 				pw.println("</script>");
 

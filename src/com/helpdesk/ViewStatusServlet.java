@@ -54,7 +54,7 @@ public class ViewStatusServlet extends HttpServlet{
             pw.println("}");
             pw.println("</script>");
 
-            pw.println("</head><body>");
+            pw.println("</head><body onload='noBack();'>");
             pw.println("<h2 style='text-align: center; margin-top: 80px;'>TICKET STATUS UPDATES</h2>"); // Removed top margin
 
             pw.println("<div class='table-container'>"); // Start of table container
